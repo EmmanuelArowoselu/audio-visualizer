@@ -1,9 +1,7 @@
-//This was made with the help of Colorful Coding's Audio Visualizer tutorial @ https://www.youtube.com/watch?v=uk96O7N1Yo0 
-
-var song 
-var img 
-var fft
-var particles = []
+var song; 
+var img; 
+var fft;
+var particles = [];
 var canvas;
 
 function windowResized() {
@@ -12,17 +10,17 @@ function windowResized() {
 
 function preload() {
   song = loadSound('./public/Nujabes - Aruarian Dance.mp3');
-  img = loadImage('./public/bg.jpg')
+  img = loadImage('./public/bg.jpg');
 }
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
-  canvas.position(0, 0)
-  canvas.style('z-index', '-1')
-  angleMode(DEGREES)
-  imageMode(CENTER)
-  rectMode(CENTER)
-  image(img, 0, 0)
+  canvas.position(0, 0);
+  canvas.style('z-index', '-1');
+  angleMode(DEGREES);
+  imageMode(CENTER);
+  rectMode(CENTER);
+  image(img, 0, 0);
   fft = new p5.FFT(0.3);
 
   noLoop();
@@ -31,29 +29,29 @@ function setup() {
 function draw() {
   background(0);
   
-  translate(width / 2, height / 2)
+  translate(width / 2, height / 2);
 
-  fft.analyze()
+  fft.analyze();
 
-  amp = fft.getEnergy( 20, 200)
+  amp = fft.getEnergy( 20, 200);
 
-  push()
+  push();
 
   if (amp > 230) {
-    rotate(random(-0.5, 0.5))
+    rotate(random(-0.5, 0.5));
   }
   
-  image(img, 0, 0, width, height)
-  pop()
+  image(img, 0, 0, width, height);
+  pop();
 
-  var alpha = map(amp, 0, 255, 180, 150)
-  fill(0, alpha)
-  noStroke
-  rect(0, 0, width, height)
+  var alpha = map(amp, 0, 255, 180, 150);
+  fill(0, alpha);
+  noStroke;
+  rect(0, 0, width, height);
 
   stroke(225);
   strokeWeight(3);
-  noFill()
+  noFill();
   
   var wave = fft.waveform();
   
@@ -61,7 +59,7 @@ function draw() {
     beginShape();
     for (var i = 0; i <= 180; i+= 0.5) {
       var index = floor(map(i, 0, width, 0, wave.length - 1));
-      var r = map(wave[index], -1, 1, 0, 200)
+      var r = map(wave[index], -1, 1, 0, 200);
       
       var x = r * sin(i) * t;
       var y = r * cos(i);
@@ -70,61 +68,61 @@ function draw() {
     endShape();
   }
   
-  var p = new Particle()
-  particles.push(p)
+  var p = new Particle();
+  particles.push(p);
   
   for (var i = particles.length -1 ; i >= 0; i--) {
     
     if (!particles[i].edges()) {
-      particles[i].update(amp>230)
+      particles[i].update(amp>230);
       particles[i].show();
     } else {
-      particles.splice(i, 1)
+      particles.splice(i, 1);
     }
   }
 }
 
 function mouseClicked() {
   if(song.isPlaying()) {
-    song.pause()
-    noLoop()
+    song.pause();
+    noLoop();
   } else {
-    song.play()
-    loop()
+    song.play();
+    loop();
   }
 }
 
 class Particle {
   constructor() {
-    this.pos = p5.Vector.random2D().mult(100)
+    this.pos = p5.Vector.random2D().mult(100);
     this.vel = createVector(0, 0);
-    this.acc = this.pos.copy().mult(random(0.0001, 0.00001))
+    this.acc = this.pos.copy().mult(random(0.0001, 0.00001));
 
-    this.w = random(3, 5)
+    this.w = random(3, 5);
     
-    this.color = [random(200, 255), random(200, 255), random(200, 255)]
+    this.color = [random(200, 255), random(200, 255), random(200, 255)];
   }
   
   update(cond) {
-    this.vel.add(this.acc)
-    this.pos.add(this.vel)
+    this.vel.add(this.acc);
+    this.pos.add(this.vel);
     if (cond) {
-      this.pos.add(this.vel)
-      this.pos.add(this.vel)
-      this.pos.add(this.vel)
+      this.pos.add(this.vel);
+      this.pos.add(this.vel);
+      this.pos.add(this.vel);
     }
   }
   
   edges() {
     if (this.pos.x < -width / 2 || this.pos.x > width / 2 || this.pos.y < -height / 2 || this.pos.y > height / 2) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
   }
   show() {
-    noStroke()
-    fill(this.color)
-    ellipse(this.pos.x, this.pos.y, this.w)
+    noStroke();
+    fill(this.color);
+    ellipse(this.pos.x, this.pos.y, this.w);
   }
 }
