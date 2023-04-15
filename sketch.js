@@ -63,7 +63,8 @@ function draw() {
   for (var i = 0; i <= 180; i+= 0.5) {
     var index = floor(map(i, 0, width, 0, wave.length - 1));
 
-    var r = map(wave[index], -1, 1, 0, 200)
+    var r = map(wave[index], -1, 1, 150, 350)
+    //0, 200
 
     var x = r * sin(i) * t;
     var y = r * cos(i);
@@ -100,7 +101,7 @@ function mouseClicked() {
 
 class Particle {
   constructor() {
-    this.pos = p5.Vector.random2D().mult(100)
+    this.pos = p5.Vector.random2D().mult(250) //100
     this.vel = createVector(0, 0);
     this.acc = this.pos.copy().mult(random(0.0001, 0.00001))
 
