@@ -2,14 +2,16 @@ var song;
 var img; 
 var fft;
 var particles = [];
+var canvas;
 
 function preload() {
-  song = loadSound('./public/Nujabes - Aruarian Dance.mp3');
-  img = loadImage('./public/bg.jpg');
+  song = loadSound('Nujabes - Aruarian Dance.mp3');
+  img = loadImage('bg.jpg');
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(windowWidth, windowHeight);
+  canvas.position(0, 0)
   angleMode(DEGREES);
   imageMode(CENTER);
   rectMode(CENTER);
