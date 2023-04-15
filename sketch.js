@@ -63,7 +63,7 @@ function draw() {
   for (var i = 0; i <= 180; i+= 0.5) {
     var index = floor(map(i, 0, width, 0, wave.length - 1));
 
-    var r = map(wave[index], -1, 1, 150, 350)
+    var r = map(wave[index], -1, 1, 0, 200)
 
     var x = r * sin(i) * t;
     var y = r * cos(i);
@@ -100,7 +100,7 @@ function mouseClicked() {
 
 class Particle {
   constructor() {
-    this.pos = p5.Vector.random2D().mult(250)
+    this.pos = p5.Vector.random2D().mult(100)
     this.vel = createVector(0, 0);
     this.acc = this.pos.copy().mult(random(0.0001, 0.00001))
 
@@ -132,3 +132,23 @@ class Particle {
     ellipse(this.pos.x, this.pos.y, this.w)
   }
 }
+
+
+//function touchStarted () {
+//  var fs = fullscreen();
+//  if (!fs) {
+//    fullscreen(true);
+//  }
+//}
+
+/* full screening will change the size of the canvas */
+//function windowResized() {
+//  resizeCanvas(windowWidth, windowHeight);
+//}
+
+/* prevents the mobile browser from processing some default
+ * touch events, like swiping left for "back" or scrolling the page.
+ */
+//document.ontouchmove = function(event) {
+//    event.preventDefault();
+//};
